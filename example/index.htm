@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8" />
+
+	<title>
+		jQuery.fn.comments() 
+	</title>
+
+	<style type="text/css">
+
+		div {
+			border: 1px solid #CCCCCC ;
+			margin: 15px 0px 15px 0px ;
+			padding: 1px 20px 1px 20px ;
+		}
+
+		p {
+			border: 1px solid #FF3399 ;
+			margin: 15px 0px 15px 0px ;
+			padding: 5px 20px 5px 20px ;
+		}
+
+	</style>
+</head>
+<body>
+
+	<h1>
+		jQuery.fn.comments() 
+	</h1>
+
+	<!-- id = 1 -->
+
+	<div>
+		<!-- id = 2 -->
+	</div>
+
+	<div>
+		
+		<div>
+			<!-- id = 3 -->
+		</div>
+
+		<!-- id = 4 -->
+	</div>
+
+	<script type="text/javascript" src="../vendor/jquery/jquery-2.1.0.min.js"></script>
+	<script type="text/javascript" src="../src/jquery.comments.js"></script>
+	<script type="text/javascript">
+
+		// Loop over the IDs.
+		for ( var i = 1 ; i <= 4 ; i++ ) {
+
+			// Insert actual elements after each found comment (with given attirubte).
+			$( "body" ).comments( "id", i, true )
+				.after( "<p>ID: " + i + "</p>" )
+			;
+
+		}		
+
+	</script>
+
+</body>
+</html>
