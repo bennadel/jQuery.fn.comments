@@ -33,8 +33,8 @@
 
 		}
 
-		// Add the found comments to the stack of jQuery selector execution so that the user
-		// can tranverse back up the stack when done.
+		// Add the found comments to the stack of jQuery selector execution so that the 
+		// user can tranverse back up the stack when done.
 		return( this.pushStack( comments, "comments", arguments ) );
 
 	};
