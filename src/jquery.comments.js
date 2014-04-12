@@ -63,6 +63,23 @@
 	// I collect the comment nodes contained within the given root node. 
 	function collectComments( rootNode, isDeepSearch ) {
 
+		// Check for modern browser optimization.
+		if ( isDeepSearch && document.createTreeWalker ) {
+
+			return( collectCommentsWithTreeWalker( rootNode ) );
+
+		}
+
+		return( collectCommentsWithRecursion( rootNode, isDeepSearch ) );
+
+	}
+
+
+	// I collect the comment nodes contained within the given root node using the 
+	// universally supported node API. This method can handle both shallow and deep
+	// searches using recursion.
+	function collectCommentsWithRecursion( rootNode, isDeepSearch ) {
+
 		var comments = [];
 
 		var node = rootNode.firstChild;
@@ -77,11 +94,33 @@
 			// Is element node (and we want to recurse).
 			} else if ( isDeepSearch && ( node.nodeType === 1 ) ) {
 
-				appendAll( comments, collectComments( node, isDeepSearch ) );
+				appendAll( comments, collectCommentsWithRecursion( node, isDeepSearch ) );
 
 			}
 
 			node = node.nextSibling;
+
+		}
+
+		return( comments );
+
+	}
+
+
+	// I collect the comment nodes contained within the given root node using the newer
+	// TreeWalker API. This method can only handle deep searches since the search cannot
+	// be [easily] limited to a single level of the DOM.
+	function collectCommentsWithTreeWalker( rootNode ) {
+
+		var comments = [];
+
+		// NOTE: Last two arguments use default values but are NOT optional in Internet 
+		// Explorer. As such, we have to use them here for broader support.
+		var treeWalker = document.createTreeWalker( rootNode, NodeFilter.SHOW_COMMENT, null, false );
+
+		while ( treeWalker.nextNode() ) {
+
+			comments.push( treeWalker.currentNode );
 
 		}
 
